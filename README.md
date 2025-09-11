@@ -4,54 +4,125 @@ Forge is a lightweight NestJS-like scaffolding CLI written in TypeScript.
 
 Usage
 
-- Build: npm run build
-- Link locally: npm link (after install deps) to use the `forge` command
-- Generate: forge g module User
+# Forge CLI
 
-Commands
-- forge g <type> <name>
-  - type: module | service | controller | resource
+Forge is a lightweight scaffolding CLI for Node.js + TypeScript. It generates simple modules (controller, service, routes, validation) using Handlebars templates and works with plain Express-style code (no Nest decorators required).
 
-Step-by-step examples
+Install (from npm)
 
-1) Install dependencies and build
+You can install Forge globally or run it with npx:
+
+```powershell
+npm install -g forge
+# or run without installing (downloads/run from npm):
+npx forge g module user
+```
+
+Quick usage
+
+Generate a module named `user`:
+
+```powershell
+forge g module user
+```
+
+Behavior
+- The generator will prompt where to create the module (Default `src/` or a Custom path).
+- Default target → `src/user/` (kebab-case folder and filenames).
+- Custom target → `<customPath>/user/`.
+- If the target folder already exists the generator will log a warning and skip generation (no overwrite by default).
+
+Generated files (for `forge g module user`)
+- `user.controller.ts` — exports `UserController` (plain TypeScript class)
+- `user.service.ts` — exports `UserService` (dummy `findAll()` implementation)
+- `user.routes.ts` — `registerUserRoutes(app: Express)` registers GET `/users`
+- `user.validation.ts` — `UserValidation` with `validateCreateUser(data)` checks
+- `user.module.ts` — plain module export (`UserModule`) with references and a `register(app)` helper
+
+Developer workflow
+- Build and test locally:
 
 ```powershell
 npm install
 npm run build
+npm test
 ```
 
-2) Link locally (makes `forge` available globally in your shell)
+- Link locally for rapid manual testing (makes `forge` available in your shell):
+
+```powershell
+# Forge CLI
+
+Forge is a lightweight scaffolding CLI for Node.js + TypeScript. It generates simple modules (controller, service, routes, validation) using Handlebars templates and works with plain Express-style code (no Nest decorators required).
+
+## Install (from npm)
+
+You can install Forge globally or run it with npx:
+
+```powershell
+npm install -g forge
+# or run without installing (downloads/run from npm):
+npx forge g module user
+```
+
+## Quick usage
+
+Generate a module named `user`:
+
+```powershell
+forge g module user
+```
+
+## Behavior
+
+- The generator will prompt where to create the module (Default `src/` or a Custom path).
+- Default target → `src/user/` (kebab-case folder and filenames).
+- Custom target → `<customPath>/user/`.
+- If the target folder already exists the generator will log a warning and skip generation (no overwrite by default).
+
+## Generated files (for `forge g module user`)
+
+- `user.controller.ts` — exports `UserController` (plain TypeScript class)
+- `user.service.ts` — exports `UserService` (dummy `findAll()` implementation)
+- `user.routes.ts` — `registerUserRoutes(app: Express)` registers GET `/users`
+- `user.validation.ts` — `UserValidation` with `validateCreateUser(data)` checks
+- `user.module.ts` — plain module export (`UserModule`) with references and a `register(app)` helper
+
+## Developer workflow
+
+- Build and test locally:
+
+```powershell
+npm install
+npm run build
+npm test
+```
+
+- Link locally for rapid manual testing (makes `forge` available in your shell):
 
 ```powershell
 npm link
+forge g module foo
+# when done: npm unlink --no-save forge
 ```
 
-3) Generate a single module
+## Publishing & CI
 
-```powershell
-forge g module User
-```
+- The project includes a GitHub Actions workflow that runs tests and builds on push and publishes to npm when a tag matching `v*.*.*` is pushed. Make sure to set the `NPM_TOKEN` repository secret for publishing.
 
-4) Generate a full resource (module + service + controller)
+## Notes
 
-```powershell
-forge g resource User
-```
+- Templates live in `src/templates/*.ts.hbs`. Handlebars context provides `{{Name}}` (PascalCase) and `{{name}}` (kebab-case).
+- Node engines: `>=14` (see `package.json`).
 
-5) Use interactive prompt to confirm creation
+## Contributing
 
-```powershell
-forge g service User --interactive
-```
+- PRs welcome. Suggested workflow:
 
-Notes
+  1. Fork and create a feature branch
+  2. Run tests and build locally
+  3. Open a PR against `main`
 
-- Generated files are placed under `src/<kebab-name>/`.
-- Class names are PascalCase (e.g. `UserService`) and files are kebab-case (e.g. `user.service.ts`).
-- The templates live in `src/templates/*.ts.hbs`. They use `{{Name}}` for class names and `{{name}}` for kebab-case filenames.
+## License
 
-Development tips
-
-- To test changes to the CLI quickly after code edits, run `npm run build` and use `node dist/cli.js g module Foo`.
-- To unlink: `npm unlink --no-save forge`.
+- MIT
