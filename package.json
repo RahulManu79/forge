@@ -1,6 +1,6 @@
 {
   "name": "node-forge",
-  "version": "0.1.1",
+  "version": "0.0.1",
   "description": "A lightweight Nest-like CLI scaffolding tool",
   "main": "dist/src/cli.js",
   "types": "dist/src/cli.d.ts",
