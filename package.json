@@ -1,5 +1,5 @@
 {
-  "name": "forge-cli",
+  "name": "@rahul7902/forge",
   "version": "0.1.0",
   "description": "A lightweight Nest-like CLI scaffolding tool",
   "main": "dist/src/cli.js",
