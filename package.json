@@ -14,11 +14,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourname/forge.git"
+    "url": "https://github.com/RahulManu79/forge.git"
   },
-  "homepage": "https://github.com/yourname/forge#readme",
+  "homepage": "https://github.com/RahulManu79/forge#readme",
   "bugs": {
-    "url": "https://github.com/yourname/forge/issues"
+    "url": "https://github.com/RahulManu79/forge/issues"
   },
   "engines": {
     "node": ">=14"
@@ -39,7 +39,7 @@
     "forge",
     "typescript"
   ],
-  "author": "Your Name <you@example.com>",
+  "author": "Rahul Manu <rahulmanu7902@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",

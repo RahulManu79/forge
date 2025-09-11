@@ -12,10 +12,3 @@ export function register{{Name}}Routes(app: Express) {
 
   app.use('/', router);
 }
-import { Express } from 'express';
-import { {{Name}}Controller } from './{{name}}.controller';
-
-export function register{{Name}}Routes(app: Express) {
-  const controller = new {{Name}}Controller();
-  app.get('/{{name}}', controller.getUsers.bind(controller));
-}
