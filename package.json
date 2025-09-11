@@ -1,6 +1,6 @@
 {
   "name": "@rahul7902/forge",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A lightweight Nest-like CLI scaffolding tool",
   "main": "dist/src/cli.js",
   "types": "dist/src/cli.d.ts",
