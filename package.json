@@ -1,0 +1,65 @@
+{
+  "name": "forge",
+  "version": "0.1.0",
+  "description": "A lightweight Nest-like CLI scaffolding tool",
+  "main": "dist/src/cli.js",
+  "types": "dist/src/cli.d.ts",
+  "bin": {
+    "forge": "dist/src/cli.js"
+  },
+  "files": [
+    "dist",
+    "src/templates",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourname/forge.git"
+  },
+  "homepage": "https://github.com/yourname/forge#readme",
+  "bugs": {
+    "url": "https://github.com/yourname/forge/issues"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist",
+    "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "test": "jest",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "cli",
+    "scaffold",
+    "forge",
+    "typescript"
+  ],
+  "author": "Your Name <you@example.com>",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "handlebars": "^4.7.8",
+    "inquirer": "^9.2.0",
+    "mkdirp": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/handlebars": "^4.1.0",
+    "@types/inquirer": "^9.0.9",
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.2",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.30.0",
+    "jest": "^29.6.1",
+    "prettier": "^3.0.0",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.5.6"
+  }
+}

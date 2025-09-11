@@ -1,0 +1,21 @@
+import express, { Express, Request, Response } from 'express';
+import { {{Name}}Controller } from './{{name}}.controller';
+
+export function register{{Name}}Routes(app: Express) {
+  const router = express.Router();
+  const controller = new {{Name}}Controller();
+
+  router.get('/{{name}}s', async (req: Request, res: Response) => {
+    const data = await controller.getUsers();
+    res.json(data);
+  });
+
+  app.use('/', router);
+}
+import { Express } from 'express';
+import { {{Name}}Controller } from './{{name}}.controller';
+
+export function register{{Name}}Routes(app: Express) {
+  const controller = new {{Name}}Controller();
+  app.get('/{{name}}', controller.getUsers.bind(controller));
+}

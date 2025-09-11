@@ -1,0 +1,24 @@
+export class {{Name}}Validation {
+  public validateCreateUser(data: any) {
+    const errors: string[] = [];
+    if (!data) {
+      errors.push('No data provided');
+      return { valid: false, errors };
+    }
+    if (!data.name) errors.push('name is required');
+    if (!data.email) errors.push('email is required');
+    return { valid: errors.length === 0, errors };
+  }
+}
+export class {{Name}}Validation {
+  static validateCreateUser(data: any): { valid: boolean; errors?: string[] } {
+    const errors: string[] = [];
+    if (!data) {
+      errors.push('No data provided');
+    } else {
+      if (!data.name) errors.push('name is required');
+      if (!data.email) errors.push('email is required');
+    }
+    return { valid: errors.length === 0, errors: errors.length ? errors : undefined };
+  }
+}

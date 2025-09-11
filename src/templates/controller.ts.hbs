@@ -1,0 +1,25 @@
+import { {{Name}}Service } from './{{name}}.service';
+
+export class {{Name}}Controller {
+  private service: {{Name}}Service;
+
+  constructor() {
+    this.service = new {{Name}}Service();
+  }
+
+  public async getUsers() {
+    return this.service.findAll();
+  }
+}
+import { Controller, Get } from '@nestjs/common';
+import { {{Name}}Service } from './{{name}}.service';
+
+@Controller('{{name}}')
+export class {{Name}}Controller {
+  constructor(private readonly service: {{Name}}Service) {}
+
+  @Get()
+  getHello(): string {
+    return this.service.getHello();
+  }
+}
