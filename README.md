@@ -1,11 +1,5 @@
 # Forge CLI
 
-Forge is a lightweight NestJS-like scaffolding CLI written in TypeScript.
-
-Usage
-
-# Forge CLI
-
 Forge is a lightweight scaffolding CLI for Node.js + TypeScript. It generates simple modules (controller, service, routes, validation) using Handlebars templates and works with plain Express-style code (no Nest decorators required).
 
 Install (from npm)
