@@ -65,9 +65,9 @@ export async function generate(
 
   const target = pathAnswers.choice === 'default' ? 'src' : pathAnswers.customPath || 'src';
 
-  // Try multiple template locations because compiled code lives under dist/src
+  const templatesDir = path.resolve(__dirname, '..', 'templates');
   const candidates = [
-    path.join(__dirname, '..', 'templates', `${t}.ts.hbs`), // compiled dist/src/templates
+    path.join(templatesDir, `${t}.ts.hbs`), // bundled templates
     path.join(process.cwd(), 'src', 'templates', `${t}.ts.hbs`), // project source
     path.join(process.cwd(), 'templates', `${t}.ts.hbs`), // project root templates
   ];

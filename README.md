@@ -1,104 +1,108 @@
-# Forge CLI
+# Forge CLI 🚀
 
-Forge is a lightweight scaffolding CLI for Node.js + TypeScript. It generates simple modules (controller, service, routes, validation) using Handlebars templates and works with plain Express-style code (no Nest decorators required).
+Forge is a powerful, lightweight scaffolding CLI for Node.js and TypeScript projects. It helps you generate modules (including controllers, services, routes, and validation files) with a single command, following the patterns of frameworks like NestJS but without the need for decorators or complex configurations.
 
-Install (from npm)
+## Features
 
-You can install Forge globally or run it with npx:
+-   **Interactive Generation**: Prompts for destination paths.
+-   **File Scaffolding**: Generates organized, feature-based modules.
+-   **Customizable Templates**: Uses Handlebars for easy template modification.
+-   **No Overwrites**: Protects existing code by default.
+-   **Cross-Platform**: Works seamlessly on Windows and Linux.
 
-```powershell
-npm install -g forge
-# or run without installing (downloads/run from npm):
-npx forge g module user
+## Installation
+
+You can install Forge globally or use it directly with `npx`.
+
+```bash
+npm install -g @node-forge/forge
 ```
 
-Quick usage
+## Usage
 
-Generate a module named `user`:
+### Generating a Module
 
-```powershell
-forge g module user
+To generate a complete module (controller, service, routes, validation, and module file), use the `g module` command:
+
+```bash
+npx @node-forge/forge g module <module-name>
 ```
 
-Behavior
-- The generator will prompt where to create the module (Default `src/` or a Custom path).
-- Default target → `src/user/` (kebab-case folder and filenames).
-- Custom target → `<customPath>/user/`.
-- If the target folder already exists the generator will log a warning and skip generation (no overwrite by default).
+**Example:**
 
-Generated files (for `forge g module user`)
-- `user.controller.ts` — exports `UserController` (plain TypeScript class)
-- `user.service.ts` — exports `UserService` (dummy `findAll()` implementation)
-- `user.routes.ts` — `registerUserRoutes(app: Express)` registers GET `/users`
-- `user.validation.ts` — `UserValidation` with `validateCreateUser(data)` checks
-- `user.module.ts` — plain module export (`UserModule`) with references and a `register(app)` helper
-
-Developer workflow
-- Build and test locally:
-
-```powershell
-npm install
-npm run build
-npm test
+```bash
+npx @node-forge/forge g module user
 ```
 
-- Link locally for rapid manual testing (makes `forge` available in your shell):
+This will create a `user` directory containing:
+- `user.controller.ts`
+- `user.service.ts`
+- `user.routes.ts`
+- `user.validation.ts`
+- `user.module.ts`
 
-```powershell
-# Forge CLI
+### Generating a Resource
 
-Forge is a lightweight scaffolding CLI for Node.js + TypeScript. It generates simple modules (controller, service, routes, validation) using Handlebars templates and works with plain Express-style code (no Nest decorators required).
+The `g resource` command is an alias for `g module` and provides the same functionality:
 
-## Install (from npm)
-
-You can install Forge globally or run it with npx:
-
-```powershell
-npm install -g forge
-# or run without installing (downloads/run from npm):
-npx forge g module user
+```bash
+npx @node-forge/forge g resource <resource-name>
 ```
 
-## Quick usage
+### Generating Individual Components
 
-Generate a module named `user`:
+You can also generate individual files for a module:
 
-```powershell
-forge g module user
+-   **Controller**: `npx @node-forge/forge g controller <name>`
+-   **Service**: `npx @node-forge/forge g service <name>`
+
+### Interactive Mode
+
+By default, Forge runs in interactive mode, asking you where to generate the files:
+
+```
+? Where do you want to generate the module? (Use arrow keys)
+> Default (src/)
+  Custom Path
 ```
 
-## Behavior
+If you select "Custom Path," you will be prompted to enter a relative path from your project root.
 
-- The generator will prompt where to create the module (Default `src/` or a Custom path).
-- Default target → `src/user/` (kebab-case folder and filenames).
-- Custom target → `<customPath>/user/`.
-- If the target folder already exists the generator will log a warning and skip generation (no overwrite by default).
+## Development
 
-## Generated files (for `forge g module user`)
+To contribute to Forge or run it locally:
 
-- `user.controller.ts` — exports `UserController` (plain TypeScript class)
-- `user.service.ts` — exports `UserService` (dummy `findAll()` implementation)
-- `user.routes.ts` — `registerUserRoutes(app: Express)` registers GET `/users`
-- `user.validation.ts` — `UserValidation` with `validateCreateUser(data)` checks
-- `user.module.ts` — plain module export (`UserModule`) with references and a `register(app)` helper
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/RahulManu79/forge.git
+    cd forge
+    ```
 
-## Developer workflow
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-- Build and test locally:
+3.  **Build the project:**
+    ```bash
+    npm run build
+    ```
 
-```powershell
-npm install
-npm run build
-npm test
+4.  **Link the package for local testing:**
+    ```bash
+    npm link
+    ```
+
+Now you can use the `forge` command globally on your system.
+
+```bash
+forge g module my-feature
 ```
 
-- Link locally for rapid manual testing (makes `forge` available in your shell):
+## License
 
-```powershell
-npm link
-forge g module foo
-# when done: npm unlink --no-save forge
-```
+This project is licensed under the MIT License.
+
 
 ## Publishing & CI
 

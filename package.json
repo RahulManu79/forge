@@ -8,9 +8,7 @@
     "forge": "dist/src/cli.js"
   },
   "files": [
-    "dist",
-    "src/templates",
-    "README.md"
+    "dist"
   ],
   "repository": {
     "type": "git",
