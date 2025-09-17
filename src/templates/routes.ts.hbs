@@ -3,10 +3,9 @@ import { {{Name}}Controller } from './{{name}}.controller';
 
 export function register{{Name}}Routes(app: Express) {
   const router = express.Router();
-  const controller = new {{Name}}Controller();
 
   router.get('/{{name}}s', async (req: Request, res: Response) => {
-    const data = await controller.getUsers();
+    const data = await {{Name}}Controller.getUsers();
     res.json(data);
   });
 

@@ -1,14 +1,9 @@
 import { {{Name}}Service } from './{{name}}.service';
 
 export class {{Name}}Controller {
-  private service: {{Name}}Service;
-
-  constructor() {
-    this.service = new {{Name}}Service();
-  }
-
-  public async getUsers() {
-    return this.service.findAll();
+ 
+  static async getUsers() {
+    return {{Name}}Service.findAll();
   }
 }
 

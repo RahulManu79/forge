@@ -4,6 +4,7 @@ import Handlebars from 'handlebars';
 import { kebabCase, pascalCase } from '../utils/casing';
 import { ensureDir, writeFileIfNotExists } from '../utils/fs';
 import { green, yellow, red } from '../utils/chalk';
+import { createSpinner } from '../utils/spinner';
 import config from '../config';
 
 type GenType = 'module' | 'service' | 'controller' | 'resource';
@@ -17,7 +18,7 @@ async function renderTemplate(templatePath: string, context: Record<string, stri
 export async function generate(
   type: string,
   name: string,
-  opts: { dir?: string; interactive?: boolean } = {},
+  opts: { dir?: string; interactive?: boolean; dryRun?: boolean } = {},
 ) {
   const t = type.toLowerCase() as GenType;
   // Per requirements: always prompt the user for destination path (Default or Custom)
@@ -34,6 +35,8 @@ export async function generate(
     console.log(green(`Resource ${Name} generated.`));
     return;
   }
+
+  const spinner = createSpinner(`Generating ${t} '${Name}'...`).start();
 
   // inquirer is distributed as an ES module. When compiling to CommonJS,
   // TypeScript sometimes emits a require() which fails at runtime.
@@ -67,9 +70,10 @@ export async function generate(
 
   const templatesDir = path.resolve(__dirname, '..', 'templates');
   const candidates = [
-    path.join(templatesDir, `${t}.ts.hbs`), // bundled templates
+    path.join(process.cwd(), '.forge', 'templates', `${t}.ts.hbs`), // user-defined
+    path.join(process.cwd(), 'templates', `${t}.ts.hbs`), // project root
     path.join(process.cwd(), 'src', 'templates', `${t}.ts.hbs`), // project source
-    path.join(process.cwd(), 'templates', `${t}.ts.hbs`), // project root templates
+    path.join(templatesDir, `${t}.ts.hbs`), // bundled templates
   ];
 
   let tplPath: string | null = null;
@@ -95,10 +99,20 @@ export async function generate(
   // If the target folder already exists, warn and skip generation
   try {
     await fs.access(outDir);
-    console.warn(yellow(`Target folder ${outDir} already exists  — skipping generation.`));
+    const spinner = createSpinner(`Target folder ${outDir} already exists — skipping generation.`);
+    spinner.warn(`Target folder ${outDir} already exists — skipping generation.`);
+    spinner.stop();
     return;
   } catch {
     // does not exist -> continue
+  }
+
+  if (opts.dryRun) {
+    const spinner = createSpinner(`[dry-run] Would create directory: ${outDir}`);
+    spinner.info(`[dry-run] Would create directory: ${outDir}`);
+    spinner.info(`[dry-run] Would generate: ${t}`);
+    spinner.stop();
+    return;
   }
 
   await ensureDir(outDir);
@@ -116,9 +130,10 @@ export async function generate(
       // find template for this file
       let tpl: string | null = null;
       const cand = [
-        path.join(__dirname, '..', 'templates', `${f.tpl}.ts.hbs`),
-        path.join(process.cwd(), 'src', 'templates', `${f.tpl}.ts.hbs`),
+        path.join(process.cwd(), '.forge', 'templates', `${f.tpl}.ts.hbs`),
         path.join(process.cwd(), 'templates', `${f.tpl}.ts.hbs`),
+        path.join(process.cwd(), 'src', 'templates', `${f.tpl}.ts.hbs`),
+        path.join(__dirname, '..', 'templates', `${f.tpl}.ts.hbs`),
       ];
       for (const c of cand) {
         try {
@@ -133,13 +148,18 @@ export async function generate(
       }
       const content = await renderTemplate(tpl, { Name, name: filename });
       const outFile = path.join(outDir, f.out);
+      if (opts.dryRun) {
+        spinner.info(`[dry-run] Would create file: ${outFile}`);
+        continue;
+      }
       const written = await writeFileIfNotExists(outFile, content);
       if (!written) {
-        console.warn(yellow(`Skipped ${outFile} — already exists.`));
+        spinner.warn(`Skipped ${outFile} — already exists.`);
       } else {
-        console.log(green(`Created ${outFile}`));
+        spinner.succeed(`Created ${outFile}`);
       }
     }
+    spinner.stop();
     return;
   }
 }
